@@ -1,6 +1,6 @@
 # GLSAgent
 
-Log into GLS webpage, create a new parcel sticker and save it to disk
+Log into GLS webpage, create a new parcel sticker and save it to disk.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Or install it yourself as:
 
 There is a small standalone script:
 
-    $ gls_agent -u glsuser -p glspass --compact "John Doe,Home Street,1,1234,City,1"
+    $ gls_agent -u glsuser -p glspass -d "John Doe,Home Street,1,1234,City,1" -o output.pdf
 
 Note that while not gemified, use
 

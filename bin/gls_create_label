@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'gls_agent'
 
 options = {}
 
@@ -13,8 +14,8 @@ optparse = OptionParser.new do |opts|
     end
     options[:name] = fields.shift
     options[:street] = fields.shift
-    options[:blockno] = fields.shift
-    options[:zipcode] = fields.shift
+    options[:streetno] = fields.shift
+    options[:zip] = fields.shift
     options[:city] = fields.shift
     options[:weight] = fields.shift
   end
@@ -40,8 +41,19 @@ if !options[:user] || !options[:pass]
   exit 1
 end
 
+options[:output_file] ||= 'gls-label.pdf'
+
+parcel = GLSAgent::ParcelJob.new(options[:name], options[:street], options[:streetno], options[:zip], options[:city], options[:weight])
+
 mech = GLSMech.new
 mech.user = options[:user]
 mech.pass = options[:pass]
+
+pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
+if pdf_file_path != options[:output_file]
+  STDERR.puts "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
+else
+  puts "Success: Saved label to #{pdf_file_path}."
+end
 
 exit 0

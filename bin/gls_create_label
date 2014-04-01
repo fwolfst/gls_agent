@@ -1,3 +1,47 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
 
+options = {}
+
+optparse = OptionParser.new do |opts|
+  opts.on('-l', '--label-data DATA', 'label data, comma-separated.') do |l|
+    fields = l.split(',')
+    if fields.length != 6
+      STDERR.puts 'Error: label data has to be in format "John Doe,Home Street,1,1234,City,1".'
+      exit 1
+    end
+    options[:name] = fields.shift
+    options[:street] = fields.shift
+    options[:blockno] = fields.shift
+    options[:zipcode] = fields.shift
+    options[:city] = fields.shift
+    options[:weight] = fields.shift
+  end
+  opts.on('-u', '--gls-user GLSUSER', 'username of GLS account.') do |u|
+    options[:user] = u
+  end
+  opts.on('-p', '--gls-password GLSPASSWORD', 'password of GLS account.') do |p|
+    options[:pass] = p
+  end
+  opts.on('-o', '--output-file FILE', 'Write output (pdf) to FILE') do |o|
+    options[:output_file] = o
+  end
+  opts.on('-h', '--help', 'Show help.') do
+    puts opts
+    exit 0
+  end
+end
+
+optparse.parse!
+
+if !options[:user] || !options[:pass]
+  STDERR.puts 'Error: Need to specify user and pass.'
+  exit 1
+end
+
+mech = GLSMech.new
+mech.user = options[:user]
+mech.pass = options[:pass]
+
+exit 0

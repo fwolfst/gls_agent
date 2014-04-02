@@ -1,6 +1,8 @@
 # GLSAgent
 
-Log into GLS webpage, create a new parcel sticker and save it to disk.
+Log into GLS (General Logistics Systems) webpage, create a new parcel sticker and save it to disk.
+
+You'll need a "Easy-Start"/"Your GLS" account to do so.
 
 ## Installation
 

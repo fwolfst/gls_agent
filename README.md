@@ -34,6 +34,17 @@ and
 
 to play around.
 
+## Configuration
+
+You can invoke gls_agent without any configuration by specifying command line parameters.
+If you do not want to retype your gls credentials or do not want them to travel the wire (ssh), be present in the history (i.e. bash) or visible in the process list, you can put credentials or delivery details in ~/.gls_agent .
+
+Its syntax follows the
+
+    option=value
+
+scheme, where option can be anything of: user, pass, name, street, streetno, zip, city, weight, output_file .
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/gls_agent/fork )

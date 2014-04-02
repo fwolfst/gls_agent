@@ -64,7 +64,7 @@ if !options[:user] || !options[:pass]
   exit 1
 end
 
-if !options[:name]
+if !options[:name] || !options[:street] || !options[:streetno] || !options[:zip] || !options[:city] || !options[:weight]
   STDERR.puts 'Error: Need to specify delivery data in ~/.gls_agent or -l .'
   exit 1
 end
@@ -84,4 +84,5 @@ else
   puts "Success: Saved label to #{pdf_file_path}."
 end
 
+# Be cool, explicitely.
 exit 0

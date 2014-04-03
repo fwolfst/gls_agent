@@ -25,15 +25,15 @@ end
 
 describe 'Dotfile-Parsing' do
   it 'makes a hash from abc=def options' do
-    hash = GLSAgent::hash_from_text 'abc=def'
+    hash = GLSAgent::Dotfile::hash_from_text 'abc=def'
     expect(hash[:abc]).to eq 'def'
   end
   it 'is tolerant about spaces' do
-    hash = GLSAgent::hash_from_text ' abc =def '
+    hash = GLSAgent::Dotfile::hash_from_text ' abc =def '
     expect(hash[:abc]).to eq 'def'
   end
   it 'handles multiple options' do
-    hash = GLSAgent::hash_from_text " abc =def \nuser= 123\n pass   = h"
+    hash = GLSAgent::Dotfile::hash_from_text " abc =def \nuser= 123\n pass   = h"
     expect(hash[:abc]).to eq 'def'
     expect(hash[:user]).to eq '123'
     expect(hash[:pass]).to eq 'h'

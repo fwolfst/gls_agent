@@ -3,7 +3,7 @@
 require 'optparse'
 require 'gls_agent'
 
-options = GLSAgent::get_dotfile_opts
+options = GLSAgent::Dotfile::get_opts
 
 optparse = OptionParser.new do |opts|
   opts.on('-l', '--label-data DATA', 'label data, comma-separated.') do |l|

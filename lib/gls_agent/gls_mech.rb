@@ -19,8 +19,10 @@ class GLSMech
 
   # Saves parcel label as pdf, does not overwrite file if exists,
   # returns filename that label was saved to.
+  # returns nil if login or redirection failed.
   def save_parcel_label parcel_job, filename
-    login! @user, @pass
+    return nil if !login! @user, @pass
+
     form = @mech.page.forms.first
 
     form.field_with(:name => 'txtName1').value = parcel_job.name
@@ -37,6 +39,7 @@ class GLSMech
   private
 
   # Login to GLS parcel creation web page using provided credentials.
+  # returns true if login and navigation afterwards succeeded.
   def login! username, password
     target_url = 'http://www.your-gls.eu/276-I-PORTAL-WEB/content/GLS/DE03/DE/15005.htm'
     page = @mech.get target_url
@@ -46,5 +49,6 @@ class GLSMech
     form.submit
     # Move on to target page.
     page = @mech.get target_url
+    page.uri.to_s == target_url
   end
 end

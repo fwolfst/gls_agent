@@ -1,6 +1,6 @@
 # GLSAgent
 
-Log into GLS (General Logistics Systems) webpage, create a new parcel sticker and save it to disk.
+Log into the German GLS (General Logistics Systems) webpage, create a new parcel sticker (for Germany) and save it to disk.
 
 You'll need a "Easy-Start"/"Your GLS" account to do so.
 

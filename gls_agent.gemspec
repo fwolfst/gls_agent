@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = GLSAgent::VERSION
   spec.authors       = ['Felix Wolfsteller']
   spec.email         = ['felix.wolfsteller@gmail.com']
-  spec.summary       = %q{Fetches parcel labels from GLS webpage.}
-  spec.description   = %q{Log into GLS site, create and save new parcel sticker.}
+  spec.summary       = %q{Fetches german parcel labels from GLS webpage.}
+  spec.description   = %q{Log into GLS site, create and save new parcel sticker for Germany.}
   spec.homepage      = 'https://github.com/fwolfst/gls_agent'
   spec.license       = 'MIT'
 

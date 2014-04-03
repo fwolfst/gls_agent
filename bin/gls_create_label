@@ -3,8 +3,7 @@
 require 'optparse'
 require 'gls_agent'
 
-options = GLSAgent::Dotfile::get_opts
-
+options = {}
 optparse = OptionParser.new do |opts|
   opts.on('-l', '--label-data DATA', 'label data, comma-separated.') do |l|
     fields = l.split(',')
@@ -28,6 +27,10 @@ optparse = OptionParser.new do |opts|
   opts.on('-o', '--output-file FILE', 'Write output (pdf) to FILE') do |o|
     options[:output_file] = o
   end
+  opts.on('-v', '--version', 'Show version.') do
+    puts "gls_create_label #{GLSAgent::VERSION}"
+    exit 0
+  end
   opts.on('-h', '--help', 'Show help.') do
     puts opts
     exit 0
@@ -35,6 +38,9 @@ optparse = OptionParser.new do |opts|
 end
 
 optparse.parse!
+
+defaults = GLSAgent::Dotfile::get_opts
+options = default.merge options
 
 if !options[:user] || !options[:pass]
   STDERR.puts 'Error: Need to specify user and pass in ~/.gls_agent or -u -p .'

@@ -1,3 +1,3 @@
-module GlsAgent
-  VERSION = "0.1.0"
+module GLSAgent
+  VERSION = "0.1.1.pre"
 end

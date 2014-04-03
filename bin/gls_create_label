@@ -2,7 +2,6 @@
 
 require 'optparse'
 require 'gls_agent'
-require 'json'
 
 options = GLSAgent::get_dotfile_opts
 
@@ -49,13 +48,19 @@ end
 
 options[:output_file] ||= 'gls-label.pdf'
 
-parcel = GLSAgent::ParcelJob.new(options[:name], options[:street], options[:streetno], options[:zip], options[:city], options[:weight])
+parcel = GLSAgent::job_from_hash(options)
 
 mech = GLSMech.new
 mech.user = options[:user]
 mech.pass = options[:pass]
 
 pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
+
+if !pdf_file_path
+  STDERR.puts "Error: Could not login or navigate GLS page."
+  exit 2
+end
+
 if pdf_file_path != options[:output_file]
   STDERR.puts "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
 else

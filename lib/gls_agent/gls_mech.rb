@@ -1,6 +1,7 @@
 require 'mechanize'
 require 'logger'
 
+# Utilize mechanize to do stuff on GLS webpage.
 class GLSMech
   attr_accessor :mech
   attr_accessor :user

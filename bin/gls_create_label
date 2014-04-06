@@ -57,7 +57,7 @@ end
 optparse.parse!
 
 defaults = GLSAgent::Dotfile::get_opts
-options = default.merge options
+options = defaults.merge options
 
 if !options[:user] || !options[:pass]
   STDERR.puts 'Error: Need to specify user and pass in ~/.gls_agent or -u -p .'

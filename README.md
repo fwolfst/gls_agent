@@ -48,7 +48,7 @@ To use gls_agent in your ruby project, install the gem and use something along t
     GLSAgent::ParcelJob.new('Frank Sinatra','CloudStreet','1',1234,'HeavenCity','1')
     saved_as = mech.save_parcel_label parcel,'gls_label_frank_sinatra.pdf'
 
-## Configuration
+### Configuration
 
 You can invoke gls_agent without any configuration by specifying command line parameters.
 If you do not want to retype your gls credentials or do not want them to travel the wire (ssh), be present in the history (i.e. bash) or visible in the process list, you can put credentials or delivery details in ~/.gls_agent .

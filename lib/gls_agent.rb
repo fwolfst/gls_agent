@@ -3,11 +3,11 @@ require 'gls_agent/gls_mech'
 require 'gls_agent/dotfile'
 
 module GLSAgent
-  ParcelJob = Struct.new(:name, :street, :streetno, :zip, :city, :weight)
+  ParcelJob = Struct.new(:date, :name, :street, :streetno, :zip, :city, :weight)
 
   def self.job_from_csv string
     fields = string.split(',')
-    if fields.length != 6
+    if fields.length != 7
       fail 'job_from_csv needs 6 fields'
       return nil
     end
@@ -15,6 +15,6 @@ module GLSAgent
   end
 
   def self.job_from_hash hash
-    ParcelJob.new(hash[:name], hash[:street], hash[:streetno], hash[:zip], hash[:city], hash[:weight])
+    ParcelJob.new(hash[:date], hash[:name], hash[:street], hash[:streetno], hash[:zip], hash[:city], hash[:weight])
   end
 end

@@ -20,7 +20,7 @@ class GLSMech
 
   # Saves parcel label as pdf, does not overwrite file if exists,
   # returns filename that label was saved to.
-  # returns nil if login or redirection failed.
+  # returns nil if login, creation or redirect failed.
   def save_parcel_label parcel_job, filename
     return nil if !login! @user, @pass
 
@@ -32,9 +32,19 @@ class GLSMech
     form.field_with(:name => 'txtZipCodeDisplay').value = parcel_job.zip
     form.field_with(:name => 'txtCity').value = parcel_job.city
     form.field_with(:name => 'txtWeight').value = parcel_job.weight
+    form.field_with(:name => 'txtDate').value = parcel_job.date
     
     @mech.submit(form, form.buttons.first)
-    @mech.page.iframes.first.content.save_as filename
+
+    pdf_iframe = page.iframes.first
+
+    if pdf_iframe
+      return @mech.page.iframes.first.content.save_as filename
+    elsif @mech.log
+      @mech.page.save_as "gls_agent_debug_save-parcel-fail.html"
+    end
+
+    return nil
   end
 
   private

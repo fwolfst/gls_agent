@@ -24,7 +24,7 @@ Or install it yourself as:
 
 There is a small standalone script:
 
-    $ gls_create_label -u glsuser -p glspass -d "John Doe,Home Street,1,1234,City,1" -o output.pdf
+    $ gls_create_label -u glsuser -p glspass -d "12.12.2014,John Doe,Home Street,1,1234,City,1" -o output.pdf
 
 Note that while not gemified, use
 
@@ -45,7 +45,7 @@ To use gls_agent in your ruby project, install the gem and use something along t
     mech.user = options[:user]
     mech.pass = options[:pass]
 
-    GLSAgent::ParcelJob.new('Frank Sinatra','CloudStreet','1',1234,'HeavenCity','1')
+    GLSAgent::ParcelJob.new('31.01.2014','Frank Sinatra','CloudStreet','1',1234,'HeavenCity','1')
     saved_as = mech.save_parcel_label parcel,'gls_label_frank_sinatra.pdf'
 
 ### Configuration

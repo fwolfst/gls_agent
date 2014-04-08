@@ -36,7 +36,7 @@ class GLSMech
     
     @mech.submit(form, form.buttons.first)
 
-    pdf_iframe = page.iframes.first
+    pdf_iframe = @mech.page.iframes.first
 
     if pdf_iframe
       return @mech.page.iframes.first.content.save_as filename

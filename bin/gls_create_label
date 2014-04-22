@@ -88,28 +88,44 @@ end
 
 options[:output_file] ||= 'gls-label.pdf'
 
-parcel = GLSAgent::job_from_hash(options)
-
 mech = GLSMech.new
 mech.user = options[:user]
 mech.pass = options[:pass]
 
-begin
-  pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
-rescue GLSAgent::GLSEndpointError => error
-  puts_error "The GLS Endpoint answered:\n#{error.message}"
-  exit 3
-end
-  
-if !pdf_file_path
-  puts_error "Could not login or navigate GLS page."
-  exit 2
-end
-
-if pdf_file_path != options[:output_file]
-  puts_info "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
+if !ARGV.empty?
+  parcels = File.readlines(ARGV[0]).map do |line|
+    GLSAgent::job_from_csv line
+  end
+  filenames = parcels.map do |parcel|
+    "#{parcel.name.gsub(/\W+/,'_')}.pdf"
+  end
+  mech.save_parcel_labels(parcels, filenames) do |error,saved_as|
+    if error
+      puts_error error
+    else
+      puts_info "Saved #{saved_as}."
+    end
+  end
 else
-  puts_success "Saved label to #{pdf_file_path}."
+  parcel = GLSAgent::job_from_hash(options)
+ 
+  begin
+    pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
+  rescue GLSAgent::GLSEndpointError => error
+    puts_error "The GLS Endpoint answered:\n#{error.message}"
+    exit 3
+  end
+
+  if !pdf_file_path
+    puts_error "Could not login or navigate GLS page."
+    exit 2
+  end
+
+  if pdf_file_path != options[:output_file]
+    puts_info "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
+  else
+    puts_success "Saved label to #{pdf_file_path}."
+  end
 end
 
 # Be cool, explicitely.

@@ -24,7 +24,11 @@ Or install it yourself as:
 
 There is a small standalone script:
 
-    $ gls_create_label -u glsuser -p glspass -d "12.12.2014,John Doe,Home Street,1,1234,City,1" -o output.pdf
+    $ gls_create_label -u glsuser -p glspass -l "12.12.2014,John Doe,Companyname,Home Street,1,1234,City,1" -o output.pdf
+
+Multiple labels can be created by not passing the data via --label-data or -l flag but by shoving in a file as argument (which contains mutliple lines that conform to the same format then with the -l flag):
+
+    $ gls_create_label -u glsuser -p glspass parcel_label_data.csv
 
 Note that while not gemified, use
 

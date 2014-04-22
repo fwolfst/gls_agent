@@ -49,7 +49,7 @@ To use gls_agent in your ruby project, install the gem and use something along t
     mech.user = options[:user]
     mech.pass = options[:pass]
 
-    GLSAgent::ParcelJob.new('31.01.2014','Frank Sinatra','CloudStreet','1',1234,'HeavenCity','1')
+    GLSAgent::ParcelJob.new('31.01.2014','Frank Sinatra','Singing Ltd.,'CloudStreet','1',1234,'HeavenCity','1')
     saved_as = mech.save_parcel_label parcel,'gls_label_frank_sinatra.pdf'
 
 ### Configuration
@@ -62,11 +62,13 @@ Its syntax follows the
     option=value
 
 scheme, where option can be anything of: user, pass, name, street, streetno, zip, city, weight, output_file .
+Note that these options are ignored if gls_create_label is given a file to create multiple labels.
 
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/gls_agent/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+2. Mail me.
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create a new Pull Request

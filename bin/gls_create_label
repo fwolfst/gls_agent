@@ -2,10 +2,25 @@
 
 require 'optparse'
 require 'gls_agent'
+require 'rainbow'
+
+def puts_error message
+  STDERR.puts Rainbow("Error: #{message}").red
+end
+
+def puts_info message
+  puts Rainbow(message).yellow
+end
+
+def puts_success message
+  puts Rainbow("Success: #{message}").green
+end
+
 
 options = {}
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: gls_create_label [OPTIONS]"
+  opts.banner = "Usage: gls_create_label [OPTIONS] [FILE]\n
+  Register and download a GLS parcel sticker."
 
   opts.separator ""
   opts.separator "GLS login options"
@@ -22,12 +37,13 @@ optparse = OptionParser.new do |opts|
 
   opts.on('-l', '--label-data DATA', 'Label data, comma-separated.') do |l|
     fields = l.split(',')
-    if fields.length != 7
-      STDERR.puts 'Error: label data has to be in format "01.01.2016,John Doe,Home Street,1,1234,City,1".'
+    if fields.length != 8
+      puts_error 'Error: label data has to be in format "01.01.2016,John Doe,Company,Home Street,1,1234,City,1".'
       exit 1
     end
     options[:date] = fields.shift
     options[:name] = fields.shift
+    options[:company_name] = fields.shift
     options[:street] = fields.shift
     options[:streetno] = fields.shift
     options[:zip] = fields.shift
@@ -61,12 +77,12 @@ defaults = GLSAgent::Dotfile::get_opts
 options = defaults.merge options
 
 if !options[:user] || !options[:pass]
-  STDERR.puts 'Error: Need to specify user and pass in ~/.gls_agent or -u -p .'
+  puts_error 'Need to specify user and pass in ~/.gls_agent or -u -p .'
   exit 1
 end
 
-if !options[:date] || !options[:name] || !options[:street] || !options[:streetno] || !options[:zip] || !options[:city] || !options[:weight]
-  STDERR.puts 'Error: Need to specify delivery data in ~/.gls_agent or -l .'
+if ARGV.empty? && (!options[:date] || !options[:name] || !options[:street] || !options[:streetno] || !options[:zip] || !options[:city] || !options[:weight])
+  puts_error 'Need to specify delivery data in ~/.gls_agent or -l.'
   exit 1
 end
 
@@ -78,18 +94,24 @@ mech = GLSMech.new
 mech.user = options[:user]
 mech.pass = options[:pass]
 
-pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
-
+begin
+  pdf_file_path = mech.save_parcel_label parcel, options[:output_file]
+rescue GLSAgent::GLSEndpointError => error
+  puts_error "The GLS Endpoint answered:\n#{error.message}"
+  exit 3
+end
+  
 if !pdf_file_path
-  STDERR.puts "Error: Could not login or navigate GLS page."
+  puts_error "Could not login or navigate GLS page."
   exit 2
 end
 
 if pdf_file_path != options[:output_file]
-  STDERR.puts "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
+  puts_info "Warning: #{options[:output_file]} already exists, saved to #{pdf_file_path} instead!."
 else
-  puts "Success: Saved label to #{pdf_file_path}."
+  puts_success "Saved label to #{pdf_file_path}."
 end
 
 # Be cool, explicitely.
 exit 0
+

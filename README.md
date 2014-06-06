@@ -4,6 +4,8 @@ Log into the German GLS (General Logistics Systems) webpage, create a new parcel
 
 You'll need a "Easy-Start"/"Your GLS" account to do so.
 
+GLS changed their webpage, now without JavaScript it seems that you need to save a Consignee Number with each request.  This will be a timestamp, so this script will create a lot of unique customers with weirdish numbers (one for each generated parcel sticker).
+
 ## Installation
 
 Add this line to your application's Gemfile:

@@ -103,6 +103,10 @@ class GLSMech
   end
 
   def fill_parcel_form form, parcel_job
+    @mech.page.save_as 'form.html'
+    d = DateTime.now
+    timestamp = d.strftime("%Y%m%d%H%M") + (d.second_fraction.to_f*1000).to_i.to_s
+    form.field_with(:name => 'txtConsigneeNo').value = timestamp
     form.field_with(:name => 'txtName1').value = parcel_job.name
     form.field_with(:name => 'txtName2').value = parcel_job.company
     form.field_with(:name => 'txtStreet').value = parcel_job.street

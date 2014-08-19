@@ -8,7 +8,7 @@ class GLSMech
   attr_accessor :mech
   attr_accessor :user
   attr_accessor :pass
-  @@parcel_creation_url = 'http://www.your-gls.eu/276-I-PORTAL-WEB/content/GLS/DE03/DE/15005.htm'.freeze
+  @@parcel_creation_url = 'http://www.your-gls.eu/276-I-PORTAL-WEB/content/GLS/DE03/DE/15001.htm'.freeze
 
   # Setup the mech.
   def initialize
